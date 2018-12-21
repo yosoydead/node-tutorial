@@ -1,11 +1,14 @@
 //string
-var name = "Bogdan";
+//var name = "Bogdan";
+const name = "Bogdan";
 
 //int - numbers
-var age = 25;
+//var age = 25;
+let age = 25;
 
 //bools
-var hasHobbies = true;
+//var hasHobbies = true;
+const hasHobbies = true;
 
 //functions
 //local params
