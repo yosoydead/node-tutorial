@@ -26,6 +26,22 @@ const server = http.createServer((request, response) => {
     //method will return which method you used. for accessing a page is a GET request
     //headers returns alot of information about the browser used, cookies, encoding, etc etc.
     console.log(request.url, request.method, request.headers);
+
+    //sending a response
+    //this sets the type of content sent back
+    response.setHeader("Content-Type", "text/html");
+
+    //this sends data back
+    //this is just an example of data sent even if it is stupid
+    //doing this, you send data back to the user
+    response.write("<html>");
+    response.write("<head><title>My first page</title></head>");
+    response.write("<body><h1>Hello from my server</h1></body>");
+    response.write("</html>");
+
+    //also, i need to tell the server that im done sending data
+    //cant write anything after this, it will return an error
+    response.end();
 });
 
 //this will actually start the server
