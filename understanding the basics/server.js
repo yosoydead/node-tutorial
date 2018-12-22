@@ -25,7 +25,7 @@ const server = http.createServer((request, response) => {
     //url will return the path that you accessed in the browser, IE home page, etc
     //method will return which method you used. for accessing a page is a GET request
     //headers returns alot of information about the browser used, cookies, encoding, etc etc.
-    console.log(request.url, request.method, request.headers);
+    //console.log(request.url, request.method, request.headers);
 
     //sending a response
     //this sets the type of content sent back
