@@ -52,7 +52,8 @@ const server = http.createServer((request, response) => {
         
         //if the sending data event is finished
         //do this
-        request.on('end', () => {
+        //this event will be run whenever the internal register knows it is finished
+        return request.on('end', () => {
             //this returns a string that contains whatever you wrote in the form
             //it will be of the form message=<your message>
             const parsedBody = Buffer.concat(body).toString();
@@ -63,13 +64,19 @@ const server = http.createServer((request, response) => {
             const message = parsedBody.split('=')[1];
 
             //store the message in a file
-            fs.writeFileSync("message.txt", message);
+            //if i use write file sync, this will block code execution until 
+            //it is done writing
+            //fs.writeFileSync("message.txt", message);
+            fs.writeFile("message.txt", message, (error) =>{
+                //run this redirect whenever the operation is finished
+                //302 is a code for redirect
+                response.statusCode = 302;
+                response.setHeader("Location", '/');
+                return response.end();
+            });
         });
 
-        //302 is a code for redirect
-        response.statusCode = 302;
-        response.setHeader("Location", '/');
-        return response.end();
+        
     }
     response.setHeader("Content-Type", "text/html");
     response.write("<html>");
