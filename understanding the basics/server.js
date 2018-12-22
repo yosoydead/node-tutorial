@@ -18,12 +18,20 @@ const http = require("http");
 //that function is a callback
 //this function returns a SERVER, so it needs to be stored for further usage
 const server = http.createServer((request, response) => {
-    console.log(request);
+    //when you access the localhost:xxxx, this will print the content of the 
+    //request body
+    //console.log(request);
+
+    //url will return the path that you accessed in the browser, IE home page, etc
+    //method will return which method you used. for accessing a page is a GET request
+    //headers returns alot of information about the browser used, cookies, encoding, etc etc.
+    console.log(request.url, request.method, request.headers);
 });
 
 //this will actually start the server
 //keeps running so it listens for incoming requests
 //if it is not done, then the server is built but it is not running
 //it requires a port for running or a hostname
+//this server runs in something called the event loop managed by node
 server.listen(3000);
 
