@@ -1,0 +1,1 @@
+Just some workflow and debugging stuff. Also, i used the npm init thing.
