@@ -1,5 +1,6 @@
 //first off, make the app require express
 const express = require("express");
+const path = require("path");
 
 //add a body parser so i can return a js object with the contents of the form/page/whatever
 const bodyParser = require("body-parser");
@@ -25,7 +26,7 @@ app.use(shopPage);
 //this is positioned at the bottom of the script because it will trigger
 //only if the specified path is not found in any of my routes
 app.use( (req,res,next) => {
-    res.status(404).send("<h1>Page not found</h1>");
+    res.status(404).sendFile(path.join(__dirname, "views", "not-found.html"));
 });
 
 //this starts the server
