@@ -7,12 +7,15 @@ const express = require("express");
 const app = express();
 
 //example of a response with express
-app.use( (request,response, next) => {
-    //you can still set headers manually
-    //or use all the standard node functions
-    console.log("you are in some middleware");
-    //by doing this you actually send some html back to the page
-    response.send("<h1>Hello from middleware</h1>");
-});
+// app.use( (request,response, next) => {
+//     //you can still set headers manually
+//     //or use all the standard node functions
+//     console.log("you are in some middleware");
+//     //by doing this you actually send some html back to the page
+//     response.send("<h1>Hello from middleware</h1>");
+// });
 
+
+
+//this starts the server
 app.listen(3000);
