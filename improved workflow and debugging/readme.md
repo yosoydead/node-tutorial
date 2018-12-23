@@ -1,2 +1,3 @@
 Just some workflow and debugging stuff. Also, i used the npm init thing.  
-Created a custom script in the **scripts** section of the json file. The name of that script is **start** and i can use the command **npm start** in the terminal instead of **node bla.js** so the server starts.
+Created a custom script in the **scripts** section of the json file. The name of that script is **start** and i can use the command **npm start** in the terminal instead of **node bla.js** so the server starts.  
+Nodemon is a package that is used to restart the server automatically when there are changes on the code. To install it, run **npm install --save-dev**. The **-dev** saves the development version of nodemon.

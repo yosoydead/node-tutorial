@@ -8,5 +8,8 @@
     "start": "node server2.js"
   },
   "author": "Bogdan",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^1.18.9"
+  }
 }
