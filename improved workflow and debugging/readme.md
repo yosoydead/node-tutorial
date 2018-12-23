@@ -1,1 +1,2 @@
-Just some workflow and debugging stuff. Also, i used the npm init thing.
+Just some workflow and debugging stuff. Also, i used the npm init thing.  
+Created a custom script in the **scripts** section of the json file. The name of that script is **start** and i can use the command **npm start** in the terminal instead of **node bla.js** so the server starts.
