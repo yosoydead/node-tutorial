@@ -17,6 +17,9 @@ const app = express();
 //make the app use the body parser
 app.use(bodyParser.urlencoded({extended:false}));
 
+//make the app use static files like css
+app.use(express.static(path.join(__dirname, "public")));
+
 //make the app use the newly made routes
 //by using the admin there, only routes with /admin/..... paths will match
 app.use("/admin",adminRoutes);
