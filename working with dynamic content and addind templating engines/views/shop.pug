@@ -1,0 +1,26 @@
+//- it works differently than normal html
+//- seems like it doesnt use any < > tags
+//- also, indentation matters, just like in python
+
+<!DOCTYPE html>
+html(lang="en")
+    head
+        //- this is like the normal head tag but without < >
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        meta(http-equiv="X-UA-Compatible", content="ie=edge")
+        title Shop
+        link(rel="stylesheet", href="/css/main.css")
+        link(rel="stylesheet", href="/css/product.css")
+    body
+        //-this creates a header tag
+        //-classes are passed like <tag used>.<name of the class>
+        //-this will be just like the navbar from the html shop
+        header.main-header
+            nav.main-header__nav
+                ul.main-header__item-list
+                    //- this is just one list element
+                    li.main-header__item
+                        a.active(href="/") Shop
+                    li.main-header__item
+                        a(href="admin/add-product") Add Product
