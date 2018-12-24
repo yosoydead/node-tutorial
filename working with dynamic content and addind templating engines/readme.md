@@ -1,0 +1,1 @@
+All the initial files were provided by the instructor. It is the same stuff from "understanding the basics" but with a bit more style. Also, the code is not commented.
