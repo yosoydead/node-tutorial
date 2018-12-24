@@ -9,7 +9,8 @@ html(lang="en")
         meta(charset="UTF-8")
         meta(name="viewport", content="width=device-width, initial-scale=1.0")
         meta(http-equiv="X-UA-Compatible", content="ie=edge")
-        title Shop
+        //- added the docTitle which was passed to the view through that object
+        title #{docTitle}
         link(rel="stylesheet", href="/css/main.css")
         link(rel="stylesheet", href="/css/product.css")
     body
@@ -24,3 +25,26 @@ html(lang="en")
                         a.active(href="/") Shop
                     li.main-header__item
                         a(href="admin/add-product") Add Product
+        
+        //- here the main element will be added which will contain all the elements from the prods array
+        main
+            //- this simply checks if the length of the array is not 0
+            if prods.length > 0
+                //- if i don't specify any tag, it will be assumed it is a div
+                .grid
+                    //- start a for loop to iterate through each element in the prods list
+                    each product in prods
+                        article.card.product-item
+                            header.card__header
+                                h1.product__title #{product.title}
+                            div.card__image
+                                img(src="https://about.canva.com/wp-content/uploads/sites/3/2015/01/children_bookcover.png", alt="A Book")
+                            div.card__content
+                                h2.product__price $19.99
+                                p.product__description A very interesting book about something.
+                            div.card__actions
+                                button.btn Add to Cart
+            //- if there are no elements in the list, display something to let people know what is going on
+            else
+                h1 No Products
+

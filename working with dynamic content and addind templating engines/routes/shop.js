@@ -9,12 +9,22 @@ const adminData = require("./admin")
 const router = express.Router();
 
 router.get('/', (req, res, next) => {
-  
+  //now, lets store the products array so we can make the templating
+  //engine use it to output things
+  const products = adminData.products;
+
+  //injecting the products in the templating file
+  //it lets us add data that should be added to our view
+  //it has to be added as an js objects
+  //in the template im gonna be able to use this array by calling prods
+  res.render("shop", {prods: products, docTitle: "Shop"});
+
+
+
   //res.sendFile(path.join(rootDir, 'views', 'shop.html'));
 
   //here we want to render the pug version of the shop.html
   //no need to write shop.pug because the default templating engine is defined as pug
-  res.render("shop");
   
   //logging whatever values the admin products holds
   console.log("shop.js",adminData.products);
