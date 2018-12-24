@@ -17,7 +17,10 @@ router.get('/', (req, res, next) => {
   //it lets us add data that should be added to our view
   //it has to be added as an js objects
   //in the template im gonna be able to use this array by calling prods
-  res.render("shop", {prods: products, docTitle: "Shop"});
+  res.render("shop", {
+    prods: products, 
+    docTitle: "Shop", path: "/"
+  });
 
 
 

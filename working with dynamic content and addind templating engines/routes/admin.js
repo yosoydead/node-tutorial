@@ -15,7 +15,11 @@ router.get('/add-product', (req, res, next) => {
 
   //rendering the add product page with pug
   //set the title of the page
-  res.render("add-product", {docTitle: "Add Product Page"});
+  res.render("add-product", 
+    {
+      docTitle: "Add Product Page", 
+      path: "/admin/add-product"
+    });
 });
 
 // /admin/add-product => POST

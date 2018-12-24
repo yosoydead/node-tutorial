@@ -22,9 +22,11 @@ html(lang="en")
                 ul.main-header__item-list
                     //- this is just one list element
                     li.main-header__item
-                        a(href="/") Shop
+                        a(href="/", class= (path === "/" ? "active" : "")) Shop
                     li.main-header__item
-                        a(href="admin/add-product") Add Product
+                        //-in that class, it says if the path is === to whatever path you want, set a class,
+                        //-if not, dont set any class
+                        a(href="admin/add-product", class=( path === "/admin/add-product" ? "active" : "")) Add Product
         
         //-insert here all the content of different pages that follow the same structure as above
         block content
