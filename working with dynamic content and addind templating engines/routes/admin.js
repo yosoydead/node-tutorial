@@ -13,14 +13,16 @@ const products = [];
 router.get('/add-product', (req, res, next) => {
   //res.sendFile(path.join(rootDir, 'views', 'add-product.html'));
 
+  /*pug stuff
   //rendering the add product page with pug
   //set the title of the page
   // res.render("add-product", 
   //   {
   //     docTitle: "Add Product Page", 
   //     path: "/admin/add-product"
-  //   });
+  //   }); */
 
+  /*handlebars stuff
   //rendering with handlebars
   res.render("add-product", {
     docTitle: "Add Product Page",
@@ -28,6 +30,12 @@ router.get('/add-product', (req, res, next) => {
     formsCSS: true,
     productCSS: true,
     activeAddProduct: true
+  }); */
+
+  //ejs stuff
+  res.render("add-product", {
+    docTitle: "Add product",
+    path:"/admin/add-product"
   });
 });
 
@@ -38,7 +46,8 @@ router.post('/add-product', (req, res, next) => {
   //push a new element(object) in the products array containing the value sent by
   //the form
   products.push(
-    {title: req.body.title}
+    {
+      title: req.body.title}
     );
   res.redirect('/');
 });

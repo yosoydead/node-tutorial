@@ -13,6 +13,7 @@ router.get('/', (req, res, next) => {
   //engine use it to output things
   const products = adminData.products;
 
+  /* pug stuff
   //injecting the products in the templating file
   //it lets us add data that should be added to our view
   //it has to be added as an js objects
@@ -20,8 +21,9 @@ router.get('/', (req, res, next) => {
   // res.render("shop", {
   //   prods: products, 
   //   docTitle: "Shop", path: "/"
-  // });
+  // });*/
 
+  /*handlebars stuff
   //handlebars cant use if statements inside the html file
   //so i have to pass into the object a value that can be checked
   res.render("shop", {
@@ -32,6 +34,13 @@ router.get('/', (req, res, next) => {
     hasProducts: products.length > 0,
     activeShop: true,
     productCSS: true,
+  }); */
+
+  //ejs stuff
+  res.render("shop", {
+    prods: products,
+    docTitle: "Shop",
+    path: "/"
   });
 
 
