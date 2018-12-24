@@ -15,11 +15,20 @@ router.get('/add-product', (req, res, next) => {
 
   //rendering the add product page with pug
   //set the title of the page
-  res.render("add-product", 
-    {
-      docTitle: "Add Product Page", 
-      path: "/admin/add-product"
-    });
+  // res.render("add-product", 
+  //   {
+  //     docTitle: "Add Product Page", 
+  //     path: "/admin/add-product"
+  //   });
+
+  //rendering with handlebars
+  res.render("add-product", {
+    docTitle: "Add Product Page",
+    path:"/admin/add-product",
+    formsCSS: true,
+    productCSS: true,
+    activeAddProduct: true
+  });
 });
 
 // /admin/add-product => POST

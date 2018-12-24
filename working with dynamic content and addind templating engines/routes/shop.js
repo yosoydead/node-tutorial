@@ -17,9 +17,21 @@ router.get('/', (req, res, next) => {
   //it lets us add data that should be added to our view
   //it has to be added as an js objects
   //in the template im gonna be able to use this array by calling prods
+  // res.render("shop", {
+  //   prods: products, 
+  //   docTitle: "Shop", path: "/"
+  // });
+
+  //handlebars cant use if statements inside the html file
+  //so i have to pass into the object a value that can be checked
   res.render("shop", {
-    prods: products, 
-    docTitle: "Shop", path: "/"
+    prods: products,
+    docTitle:"Shop",
+    path: "/",
+    //sends to the handlebars view a value that can be checked if it is true/false
+    hasProducts: products.length > 0,
+    activeShop: true,
+    productCSS: true,
   });
 
 
