@@ -21,8 +21,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 //import the add-product route
-const admin = require("./routes/admin");
-app.use("/admin", admin.router);
+const adminRoutes = require("./routes/admin");
+app.use("/admin", adminRoutes);
 
 //import the home route
 const shop = require("./routes/shop");
