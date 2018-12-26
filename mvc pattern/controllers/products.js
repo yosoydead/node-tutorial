@@ -36,11 +36,15 @@ function postAddProduct(req,res,next) {
 function getProducts(req,res,next) {
     //because i have a model that stores all the products
     //i create a var that has all the elements and pass it to the view
-    const products = Product.fetchAll();
-    res.render("shop", {
-        prods: products,
-        docTitle: "Shop",
-        path: "/"
+    //now, this function takes in a callback function that is executed once
+    //everything inside fetchAll is done
+    //once it is done, i know ill have a list of products
+    const products = Product.fetchAll( products => {
+        res.render("shop", {
+            prods: products,
+            docTitle: "Shop",
+            path: "/"
+        });
     });
 };
 
