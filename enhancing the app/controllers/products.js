@@ -12,7 +12,7 @@ const Product = require("../models/product");
 
 //render the GET(method) add product page
 function getAddProduct(req,res,next) {
-    res.render("add-product", {
+    res.render("admin/add-product", {
         docTitle: "Add Product",
         path: "/admin/add-product"
     });
@@ -40,7 +40,7 @@ function getProducts(req,res,next) {
     //everything inside fetchAll is done
     //once it is done, i know ill have a list of products
     const products = Product.fetchAll( products => {
-        res.render("shop", {
+        res.render("shop/product-list", {
             prods: products,
             docTitle: "Shop",
             path: "/"
