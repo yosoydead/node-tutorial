@@ -10,27 +10,7 @@
 //import my model class
 const Product = require("../models/product");
 
-//render the GET(method) add product page
-function getAddProduct(req,res,next) {
-    res.render("admin/add-product", {
-        docTitle: "Add Product",
-        path: "/admin/add-product"
-    });
-};
 
-
-//the POST method for adding a product
-function postAddProduct(req,res,next) {
-    // products.push({
-    //     title: req.body.title
-    // });
-    //create a new product object
-    const product = new Product(req.body.title);
-
-    //save that object
-    product.save();
-    res.redirect("/");
-};
 
 //render the page with the GET method for all products
 function getProducts(req,res,next) {
@@ -42,15 +22,40 @@ function getProducts(req,res,next) {
     const products = Product.fetchAll( products => {
         res.render("shop/product-list", {
             prods: products,
-            docTitle: "Shop",
-            path: "/"
+            docTitle: "All Products",
+            path: "/products"
         });
     });
 };
 
+function getIndex(req,res,next) {
+    const products = Product.fetchAll( products => {
+        res.render("shop/index", {
+            prods: products,
+            docTitle: "Home",
+            path: "/"
+        });
+    });
+}
+
+function getCart(req,res,next) {
+    res.render("shop/cart", {
+        docTitle: " Your Cart",
+        path: "/cart"
+    });
+}
+
+function getCheckout(req,res,next){
+    res.render("shop/checkout", {
+        docTitle: "Checkout",
+        path: "/checkout"
+    });
+}
+
 module.exports ={
-    getAddProduct,
-    postAddProduct,
-    getProducts
+    getProducts,
+    getIndex,
+    getCart,
+    getCheckout
 };
 

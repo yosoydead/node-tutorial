@@ -8,10 +8,19 @@ const router = express.Router();
 //const adminData = require("./admin");
 
 //need to import my products controller
-const productsController = require("../controllers/products");
+const shopController = require("../controllers/shop");
 
 //set up a get method for the landing page
-router.get("/", productsController.getProducts);
+router.get("/", shopController.getIndex);
+
+//add a GET method for /products for the shop folder
+router.get("/products",shopController.getProducts);
+
+//add a GET method for /cart
+router.get("/cart", shopController.getCart);
+
+//GET method for checkout
+router.get("/checkout", shopController.getCheckout);
 
 //export the route
 module.exports = router;
