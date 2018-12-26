@@ -15,7 +15,12 @@ function postAddProduct(req,res,next) {
     //     title: req.body.title
     // });
     //create a new product object
-    const product = new Product(req.body.title);
+    const title = req.body.title;
+    const imageUrl = req.body.imageUrl;
+    const description = req.body.description;
+    const price = req.body.price;
+
+    const product = new Product(title,imageUrl,description,price);
 
     //save that object
     product.save();

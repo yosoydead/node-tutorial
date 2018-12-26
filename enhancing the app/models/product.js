@@ -15,9 +15,13 @@ const path = require("path");
 class Product {
 
     //constructor
-    constructor(title){
+    constructor(title, imageUrl, description, price){
         //this objects title will be = to the title received in the constructor
         this.title = title;
+        //initialize the rest of the properties for this object
+        this.imageUrl = imageUrl;
+        this.description = description;
+        this.price = price;
     }
 
     //save function to add to the products array
