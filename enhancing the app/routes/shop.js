@@ -22,5 +22,8 @@ router.get("/cart", shopController.getCart);
 //GET method for checkout
 router.get("/checkout", shopController.getCheckout);
 
+//GET method for orders
+router.get("/orders", shopController.getOrders);
+
 //export the route
 module.exports = router;
