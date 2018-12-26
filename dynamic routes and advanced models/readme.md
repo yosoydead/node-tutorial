@@ -1,0 +1,1 @@
+* Started the dynamic routes module. All the code was provided by the course. It is basically the same from the **enhancing the app** module with some slight changes.
