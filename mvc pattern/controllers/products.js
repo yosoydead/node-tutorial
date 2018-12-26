@@ -4,7 +4,11 @@
 //that link goes into the route function
 
 //create the products array
-const products = [];
+//i moved this list to the PRODUCTS model class
+//const products = [];
+
+//import my model class
+const Product = require("../models/product");
 
 //render the GET(method) add product page
 function getAddProduct(req,res,next) {
@@ -17,15 +21,22 @@ function getAddProduct(req,res,next) {
 
 //the POST method for adding a product
 function postAddProduct(req,res,next) {
-    products.push({
-        title: req.body.title
-    });
+    // products.push({
+    //     title: req.body.title
+    // });
+    //create a new product object
+    const product = new Product(req.body.title);
 
+    //save that object
+    product.save();
     res.redirect("/");
 };
 
 //render the page with the GET method for all products
 function getProducts(req,res,next) {
+    //because i have a model that stores all the products
+    //i create a var that has all the elements and pass it to the view
+    const products = Product.fetchAll();
     res.render("shop", {
         prods: products,
         docTitle: "Shop",
