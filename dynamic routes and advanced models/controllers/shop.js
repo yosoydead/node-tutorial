@@ -52,10 +52,16 @@ exports.getProduct = (req,res,next) => {
   //console log the id to see if it works
   //console.log(prodId);
 
+  //when i click the details button, this function will find the product in the JSON file
+  //and then, redirect me to a page which holds all the data about that product
   Product.findById(prodId, product => {
-    console.log(product);
+    //i pass that product as an object to the view because i need to render its data
+    res.render("shop/product-detail", {
+      product: product, 
+      pageTitle: product.title,
+      path: "/products"
+    });
   });
 
-  res.redirect("/");
   
 };
