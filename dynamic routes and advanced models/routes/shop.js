@@ -10,15 +10,11 @@ router.get('/', shopController.getIndex);
 
 router.get('/products', shopController.getProducts);
 
-//get the id from the path
-//what follows /products/ would be the id or whatever we want to extract
-//the : is very important
-router.get("/products/:productId", shopController.getProduct);
+router.get('/products/:productId', shopController.getProduct);
 
 router.get('/cart', shopController.getCart);
 
-//POST req for /cart
-router.post("/cart", shopController.postCart);
+router.post('/cart', shopController.postCart);
 
 router.get('/orders', shopController.getOrders);
 

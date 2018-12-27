@@ -22,10 +22,7 @@
                             <p class="product__description"><%= product.description %></p>
                         </div>
                         <div class="card__actions">
-                            <!-- 
-            i have to pass a second argument to the include function because through a loop,
-            that product object from the loop is not accessable for this function -->
-                            <%- include("../includes/add-to-cart.ejs", {product: product}) %>
+                            <%- include('../includes/add-to-cart.ejs', {product: product}) %>
                         </div>
                     </article>
                 <% } %>
