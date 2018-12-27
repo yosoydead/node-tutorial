@@ -26,6 +26,7 @@ module.exports = class Product {
   }
 
   save() {
+    this.id = Math.random().toString();
     getProductsFromFile(products => {
       products.push(this);
       fs.writeFile(p, JSON.stringify(products), err => {
@@ -36,5 +37,20 @@ module.exports = class Product {
 
   static fetchAll(cb) {
     getProductsFromFile(cb);
+  }
+
+  //i want to find a specific id and i also want a callback function that
+  //triggers when that product's id is found
+  static findById(id, callback){
+    //get all the products. i need to read the entire file to find the id
+    //this function returns a parsed array of products fron the JSON file
+    getProductsFromFile( products => {
+      //the find function takes as argument another function which will be executed on
+      //each element of the array and returns that element for which this function returns TRUE
+      const product = products.find( p => {
+        return p.id === id;
+      });
+      callback(product);
+    });
   }
 };

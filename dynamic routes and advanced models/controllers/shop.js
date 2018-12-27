@@ -40,3 +40,22 @@ exports.getCheckout = (req, res, next) => {
     pageTitle: 'Checkout'
   });
 };
+
+//this function will have the job of getting that id from the path
+exports.getProduct = (req,res,next) => {
+  //the req has a field which stores parameters
+  //because in the routes i specified that after /products/ will be a productId
+  //it means that i can use it here to extract it
+  //the param from the path will be :productId
+  const prodId = req.params.productId;
+
+  //console log the id to see if it works
+  //console.log(prodId);
+
+  Product.findById(prodId, product => {
+    console.log(product);
+  });
+
+  res.redirect("/");
+  
+};
