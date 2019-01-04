@@ -22,13 +22,22 @@ exports.getProduct = (req, res, next) => {
   });
 };
 
+//in the products model i export a promise from the db query
+//here i will use it
 exports.getIndex = (req, res, next) => {
-  Product.fetchAll(products => {
+  Product.fetchAll()
+  //as i said, the promised result returns an array with 2 arrays: the data and the metadata about the table
+  //here i can use this syntax to destructure that result
+  .then( ([rows, fieldData]) => {
+    //once i get my data, the prods for the view is actually the rows returned by the query
     res.render('shop/index', {
-      prods: products,
+      prods: rows,
       pageTitle: 'Shop',
       path: '/'
     });
+  })
+  .catch( error => {
+    console.log(error);
   });
 };
 

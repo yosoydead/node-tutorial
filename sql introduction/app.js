@@ -20,17 +20,17 @@ const shopRoutes = require('./routes/shop');
 //because i export a promise, i have to use then and catch
 //then executes if everything works as expected
 //catch executes if there is an error IE cannot connect to db
-db.execute('SELECT * FROM products')
-    .then( (result) => {
-        //this object returns an array with some nested arrays
-        //the first one contains an object with the data from the db
-        //the second array contains some metadata about the table which holds the products data
-        //console.log(result);
-        console.log(result[0], result[1]);
-    })
-    .catch( (error) => {
-        console.log(error);
-    });
+// db.execute('SELECT * FROM products')
+//     .then( (result) => {
+//         //this object returns an array with some nested arrays
+//         //the first one contains an object with the data from the db
+//         //the second array contains some metadata about the table which holds the products data
+//         //console.log(result);
+//         console.log(result[0], result[1]);
+//     })
+//     .catch( (error) => {
+//         console.log(error);
+//     });
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
