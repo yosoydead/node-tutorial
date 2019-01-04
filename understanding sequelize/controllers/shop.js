@@ -35,16 +35,30 @@ exports.getProducts = (req, res, next) => {
 
 exports.getProduct = (req, res, next) => {
   const prodId = req.params.productId;
+  // Product.findById(prodId)
+  // .then( ([product]) => {
+  //   //the product is the array that contains all the rows with data from the db
+  //   res.render('shop/product-detail', {
+  //     product: product[0],
+  //     pageTitle: product.title,
+  //     path: '/products'
+  //   });
+  // })
+  // .catch(error => console.log(error));
+
+  //this does not return an array of products
   Product.findById(prodId)
-  .then( ([product]) => {
-    //the product is the array that contains all the rows with data from the db
+  .then(product => {
     res.render('shop/product-detail', {
-      product: product[0],
-      pageTitle: product.title,
-      path: '/products'
-    });
+          product: product,
+          pageTitle: product.title,
+          path: '/products'
+        });
   })
   .catch(error => console.log(error));
+
+  //or i could use the Product.findAll({ where: {id: prodId} }) but this returns an array
+  //even if it contains only one element
 };
 
 //in the products model i export a promise from the db query
