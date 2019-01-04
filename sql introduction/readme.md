@@ -1,1 +1,2 @@
-Starting code provided at the beginning of the module. The first package installed besides the other ones is **mysql2**.
+* Starting code provided at the beginning of the module. The first package installed besides the other ones is **mysql2**.
+* The first table created is the **products** table. It has the following fields: id, title, price, description, imageUrl.
