@@ -49,6 +49,14 @@ module.exports = class Product {
     //     });
     //   }
     // });
+
+    //reach out to the db to save the data
+    //i dont specify the id because it is incremented automatically by the db engine
+    //to prevent sql injection, i use this pattern here where i use placeholders for the VALUES statement
+    //followed by an array of fields
+    return db.execute("INSERT INTO products (title, price, description, imageUrl) VALUES (?, ?, ?, ?)",
+    [this.title, this.price, this.description, this.imageUrl]
+    );
   }
 
   static deleteById(id) {
