@@ -13,12 +13,21 @@ exports.postAddProduct = (req, res, next) => {
   const imageUrl = req.body.imageUrl;
   const price = req.body.price;
   const description = req.body.description;
-  const product = new Product(null, title, imageUrl, description, price);
-  product.save()
-  .then( () => {
-    //redirect to the index page once the insert has completed
-    res.redirect('/');
-  })
+  // const product = new Product(null, title, imageUrl, description, price);
+  // product.save()
+  // .then( () => {
+  //   //redirect to the index page once the insert has completed
+  //   res.redirect('/');
+  // })
+  // .catch( error => console.log(error));
+
+  //because i use sequelize now, i just can use its methods to work with the database based on the defined model
+  Product.create({
+    title: title,
+    price: price,
+    imageUrl: imageUrl,
+    description: description
+  }).then(result => console.log("created a product"))
   .catch( error => console.log(error));
 };
 

@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 const errorController = require('./controllers/error');
 
 //import my db
-const db = require("./util/db");
+const sequelize = require("./util/db");
 
 const app = express();
 
@@ -40,4 +40,12 @@ app.use(shopRoutes);
 
 app.use(errorController.get404);
 
-app.listen(3000);
+//make sequelize create or update the tables using a model
+sequelize.sync()
+    .then(result => {
+        //if the table already exists, nothing will happen
+        app.listen(3000);
+    })
+    .catch( error => {
+    console.log(error);
+});
