@@ -25,13 +25,16 @@ exports.getProducts = (req, res, next) => {
 
 exports.getProduct = (req, res, next) => {
   const prodId = req.params.productId;
-  Product.findById(prodId, product => {
+  Product.findById(prodId)
+  .then( ([product]) => {
+    //the product is the array that contains all the rows with data from the db
     res.render('shop/product-detail', {
-      product: product,
+      product: product[0],
       pageTitle: product.title,
       path: '/products'
     });
-  });
+  })
+  .catch(error => console.log(error));
 };
 
 //in the products model i export a promise from the db query

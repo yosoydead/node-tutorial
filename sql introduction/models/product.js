@@ -87,5 +87,8 @@ module.exports = class Product {
   //     const product = products.find(p => p.id === id);
   //     cb(product);
   //   });
+
+  //i search in the db for an item with a specific id
+  return db.execute("SELECT * FROM products WHERE products.id = ?", [id]);
   }
 };
