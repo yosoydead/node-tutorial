@@ -10,17 +10,27 @@ exports.getProducts = (req, res, next) => {
   //   });
   // });
 
-  Product.fetchAll()
-  .then( ([rows, fieldData]) => {
+  // Product.fetchAll()
+  // .then( ([rows, fieldData]) => {
+  //   res.render('shop/product-list', {
+  //     prods: rows,
+  //     pageTitle: 'All Products',
+  //     path: '/products'
+  //   });
+  // })
+  // .catch( error => {
+  //   console.log(error);
+  // });
+
+  Product.findAll()
+  .then(products => {
     res.render('shop/product-list', {
-      prods: rows,
-      pageTitle: 'All Products',
-      path: '/products'
-    });
+          prods: products,
+          pageTitle: 'All Products',
+          path: '/products'
+        });
   })
-  .catch( error => {
-    console.log(error);
-  });
+  .catch(error => console.log(error));
 };
 
 exports.getProduct = (req, res, next) => {
@@ -40,20 +50,32 @@ exports.getProduct = (req, res, next) => {
 //in the products model i export a promise from the db query
 //here i will use it
 exports.getIndex = (req, res, next) => {
-  Product.fetchAll()
-  //as i said, the promised result returns an array with 2 arrays: the data and the metadata about the table
-  //here i can use this syntax to destructure that result
-  .then( ([rows, fieldData]) => {
-    //once i get my data, the prods for the view is actually the rows returned by the query
+  // Product.fetchAll()
+  // //as i said, the promised result returns an array with 2 arrays: the data and the metadata about the table
+  // //here i can use this syntax to destructure that result
+  // .then( ([rows, fieldData]) => {
+  //   //once i get my data, the prods for the view is actually the rows returned by the query
+  //   res.render('shop/index', {
+  //     prods: rows,
+  //     pageTitle: 'Shop',
+  //     path: '/'
+  //   });
+  // })
+  // .catch( error => {
+  //   console.log(error);
+  // });
+
+  //using sequelize
+  //findAll can take an object containing configuration
+  Product.findAll()
+  .then(products => {
     res.render('shop/index', {
-      prods: rows,
-      pageTitle: 'Shop',
-      path: '/'
-    });
+          prods: products,
+          pageTitle: 'Shop',
+          path: '/'
+        });
   })
-  .catch( error => {
-    console.log(error);
-  });
+  .catch(error => console.log(error));
 };
 
 exports.getCart = (req, res, next) => {
