@@ -8,6 +8,11 @@ const errorController = require('./controllers/error');
 //import my db
 const sequelize = require("./util/db");
 
+//import my product model
+const Product = require("./models/product");
+//import my user model
+const User = require("./models/user");
+
 const app = express();
 
 app.set('view engine', 'ejs');
@@ -40,8 +45,15 @@ app.use(shopRoutes);
 
 app.use(errorController.get404);
 
+//defining that a product belongs to a user
+//if a user is deleted, delete all of his products
+Product.belongsTo(User, {constraints: "CASCADE"});
+
+//define that a user can have many products
+User.hasMany(Product);
+
 //make sequelize create or update the tables using a model
-sequelize.sync()
+sequelize.sync({force: true})
     .then(result => {
         //if the table already exists, nothing will happen
         app.listen(3000);
