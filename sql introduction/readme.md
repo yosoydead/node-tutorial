@@ -1,0 +1,1 @@
+Starting code provided at the beginning of the module. The first package installed besides the other ones is **mysql2**.
