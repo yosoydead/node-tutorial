@@ -200,9 +200,12 @@ exports.postCartDeleteProduct = (req, res, next) => {
 //post order method
 exports.postOrder = (req,res, next) => {
   //get all the cart items
+
+  let fetchedCart;
   req.user.getCart()
     .then( cart => {
       //here i have access to the cart itself
+      fetchedCart = cart;
       return cart.getProducts();
     })
     .then(products => {
@@ -218,21 +221,33 @@ exports.postOrder = (req,res, next) => {
       //console.log(products);
     })
     .then(result => {
+      //clear the cart after placing an order
+      return fetchedCart.setProducts(null);
+    })
+    .then(result => {
       res.redirect("/orders");
     })
     .catch(error => console.log(error));
 };
 
 exports.getOrders = (req, res, next) => {
-  res.render('shop/orders', {
-    path: '/orders',
-    pageTitle: 'Your Orders'
-  });
+  //i tell sequelize to fetch all the products that belong to these orders
+  //this will return an array that includes all the products per order
+  req.user.getOrders( {include: ['products']})
+    .then(orders => {
+      //here ill get all my orders and i have to pass some data to the view
+      res.render('shop/orders', {
+        path: '/orders',
+        pageTitle: 'Your Orders',
+        orders: orders
+      });
+    })
+    .catch(error => console.log(error));
 };
 
-exports.getCheckout = (req, res, next) => {
-  res.render('shop/checkout', {
-    path: '/checkout',
-    pageTitle: 'Checkout'
-  });
-};
+// exports.getCheckout = (req, res, next) => {
+//   res.render('shop/checkout', {
+//     path: '/checkout',
+//     pageTitle: 'Checkout'
+//   });
+// };

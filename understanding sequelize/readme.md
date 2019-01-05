@@ -1,3 +1,4 @@
 * **Following the sql introduction.**
 * Installed **sequelize**. It is an Object-Relational Mapping Library. It needs the **mysql2** package in order for it to work.
 * Created a new product.js file so it uses sequelize. Also, sequelize can create tables in the database if they don't exist and if they do, they can be overwritten or kept as they are.
+* Images: [products](https://i.imgur.com/KpaIJOW.png), [add product page](https://i.imgur.com/xluQ6KU.png), [admin products with edit/delete](https://i.imgur.com/lnCJggY.png) [empty cart](https://i.imgur.com/3dTbnYb.png), [loaded cart](https://i.imgur.com/OvagOhZ.png), [loaded order](https://i.imgur.com/R9XLcS9.png)
