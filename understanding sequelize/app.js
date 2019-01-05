@@ -40,6 +40,16 @@ const shopRoutes = require('./routes/shop');
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
+//having a dummy user created, i will use it to register any products created from now on
+app.use( (req,res,next) => {
+    User.findById(1)
+        .then(user => {
+            req.user = user;
+            next();
+        })
+        .catch(error => console.log(error));
+});
+
 app.use('/admin', adminRoutes);
 app.use(shopRoutes);
 
@@ -53,9 +63,27 @@ Product.belongsTo(User, {constraints: "CASCADE"});
 User.hasMany(Product);
 
 //make sequelize create or update the tables using a model
-sequelize.sync({force: true})
+sequelize
+    //.sync({force: true})
+    .sync()
     .then(result => {
         //if the table already exists, nothing will happen
+
+        //creating a dummy user
+        //if it doesn;t exist, it will be created
+        return User.findById(1);
+    })
+    .then( user => {
+        //if i dont have a user, create
+        if(!user){
+           return User.create( {name:"Bogdan", email: "bla@bla.com"})
+        }
+        //if i have the user, return a promise with it
+        return Promise.resolve(user);
+    })
+    //if i have the user, log it and start the app
+    .then( user => {
+        console.log(user);
         app.listen(3000);
     })
     .catch( error => {

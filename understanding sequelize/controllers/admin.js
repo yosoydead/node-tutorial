@@ -22,16 +22,33 @@ exports.postAddProduct = (req, res, next) => {
   // .catch( error => console.log(error));
 
   //because i use sequelize now, i just can use its methods to work with the database based on the defined model
-  Product.create({
+  //having created a user, i have to specify to which user the product belongs to
+  //because i specified to sequelize that a user has a many relationship, it will create a method that allows me
+  //to add a product to the db with the id of the user creating it
+  req.user.createProduct( {
     title: title,
     price: price,
     imageUrl: imageUrl,
-    description: description
-  }).then(result => {
-    console.log("created a product");
-    res.redirect('/admin/products');
+    description: description,
+    //userId: req.user.id
   })
-  .catch( error => console.log(error));
+    .then(result => {
+      console.log("created a product");
+      res.redirect('/admin/products');
+    })
+    .catch(error => console.log(error));
+
+  // Product.create({
+  //   title: title,
+  //   price: price,
+  //   imageUrl: imageUrl,
+  //   description: description,
+  //   //userId: req.user.id
+  // }).then(result => {
+  //   console.log("created a product");
+  //   res.redirect('/admin/products');
+  // })
+  // .catch( error => console.log(error));
 };
 
 exports.getEditProduct = (req, res, next) => {
