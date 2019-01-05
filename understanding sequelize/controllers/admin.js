@@ -68,8 +68,13 @@ exports.getEditProduct = (req, res, next) => {
   //     product: product
   //   });
   // });
-  Product.findById(prodId)
-  .then(product => {
+
+  //if i want to get only the products of a certain logged in user
+  req.user.getProducts( {where: {id: prodId}} )
+  //Product.findById(prodId)
+  //now i get back an array of product
+  .then(products => {
+    const product = products[0];
     if(!product){
       return res.redirect("/");
     }
@@ -81,6 +86,8 @@ exports.getEditProduct = (req, res, next) => {
     });
   })
   .catch(error => console.log(error));
+
+  
 };
 
 exports.postEditProduct = (req, res, next) => {
@@ -127,7 +134,9 @@ exports.getProducts = (req, res, next) => {
   // });
 
   //render products using sequelize
-  Product.findAll()
+  //render only the products of a certain user
+  req.user.getProducts()
+  //Product.findAll()
   .then( products => {
     res.render('admin/products', {
           prods: products,
