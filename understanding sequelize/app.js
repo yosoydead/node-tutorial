@@ -16,6 +16,9 @@ const User = require("./models/user");
 const Cart = require("./models/cart");
 //import the cartItem model
 const CartItem = require("./models/cart-item");
+//import order and orderItem models
+const Order = require("./models/order");
+const OrderItem = require("./models/order-item");
 
 const app = express();
 
@@ -80,10 +83,19 @@ Cart.belongsToMany(Product, {through: CartItem});
 //a product can be part of multiple carts
 Product.belongsToMany(Cart, {through: CartItem});
 
+//an order belongs to a user
+Order.belongsTo(User);
+
+//a user can have many orders
+User.hasMany(Order);
+
+//an order can have many products
+Order.belongsToMany(Product, {through: OrderItem});
+
 //make sequelize create or update the tables using a model
 sequelize
-    //.sync({force: true})
-    .sync()
+    .sync({force: true})
+    //.sync()
     .then(result => {
         //if the table already exists, nothing will happen
 
