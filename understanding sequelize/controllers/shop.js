@@ -1,5 +1,4 @@
 const Product = require('../models/product');
-const Cart = require('../models/cart');
 
 exports.getProducts = (req, res, next) => {
   // Product.fetchAll(products => {
@@ -194,6 +193,32 @@ exports.postCartDeleteProduct = (req, res, next) => {
     })
     .then(result => {
       res.redirect('/cart');
+    })
+    .catch(error => console.log(error));
+};
+
+//post order method
+exports.postOrder = (req,res, next) => {
+  //get all the cart items
+  req.user.getCart()
+    .then( cart => {
+      //here i have access to the cart itself
+      return cart.getProducts();
+    })
+    .then(products => {
+      return req.user.createOrder()
+        .then(order => {
+          return order.addProducts(products.map(product => {
+            product.orderItem = { quantity: product.cartItem.quantity};
+            return product;
+            })
+          );
+        })
+        .catch(error => console.log(error));
+      //console.log(products);
+    })
+    .then(result => {
+      res.redirect("/orders");
     })
     .catch(error => console.log(error));
 };

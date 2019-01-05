@@ -94,8 +94,8 @@ Order.belongsToMany(Product, {through: OrderItem});
 
 //make sequelize create or update the tables using a model
 sequelize
-    .sync({force: true})
-    //.sync()
+    //.sync({force: true})
+    .sync()
     .then(result => {
         //if the table already exists, nothing will happen
 
