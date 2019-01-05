@@ -82,8 +82,8 @@ Product.belongsToMany(Cart, {through: CartItem});
 
 //make sequelize create or update the tables using a model
 sequelize
-    .sync({force: true})
-    //.sync()
+    //.sync({force: true})
+    .sync()
     .then(result => {
         //if the table already exists, nothing will happen
 
@@ -101,7 +101,12 @@ sequelize
     })
     //if i have the user, log it and start the app
     .then( user => {
-        console.log(user);
+        //console.log(user);
+
+        //create the cart for the user
+        return user.createCart();
+    })
+    .then(cart => {
         app.listen(3000);
     })
     .catch( error => {
