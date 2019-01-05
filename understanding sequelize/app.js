@@ -12,6 +12,10 @@ const sequelize = require("./util/db");
 const Product = require("./models/product");
 //import my user model
 const User = require("./models/user");
+//import the cart model
+const Cart = require("./models/cart");
+//import the cartItem model
+const CartItem = require("./models/cart-item");
 
 const app = express();
 
@@ -62,10 +66,24 @@ Product.belongsTo(User, {constraints: "CASCADE"});
 //define that a user can have many products
 User.hasMany(Product);
 
+//a user has only one cart
+User.hasOne(Cart);
+
+//a cart belongs to a user
+Cart.belongsTo(User);
+
+//a cart belongs to many products
+//one cart can hold multiple products
+Cart.belongsToMany(Product, {through: CartItem});
+
+//a product belongs to many carts
+//a product can be part of multiple carts
+Product.belongsToMany(Cart, {through: CartItem});
+
 //make sequelize create or update the tables using a model
 sequelize
-    //.sync({force: true})
-    .sync()
+    .sync({force: true})
+    //.sync()
     .then(result => {
         //if the table already exists, nothing will happen
 
