@@ -4,6 +4,8 @@
 //get access to the db
 const getDb = require("../util/db").getDb;
 
+const mongodb = require("mongodb");
+
 
 //create the product "schema"
 class Product {
@@ -51,6 +53,26 @@ class Product {
         .catch(err => {
             console.log(err);
         });
+    }
+    
+    //fetch a single product by id
+    static findById(prodId){
+        //get connection to the db
+        const db = getDb();
+        
+        //filtering the find method so that it will return
+        //an element with the given prodId
+        //mongo stores the id as an object
+        //i have to compare an object with the given id so it compares both objects
+        return db.collection("products").find({_id: mongodb.ObjectId(prodId)})
+            .next()
+            .then( product => {
+                console.log(product);
+                return product;
+            })
+            .catch( err => {
+                console.log(err);
+            });
     }
 }
 
