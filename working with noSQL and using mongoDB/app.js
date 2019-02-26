@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 const errorController = require('./controllers/error');
 
 //import the mongodb connection
-const mongoConnect = require("./util/db");
+const mongoConnect = require("./util/db").mongoConnect;
 
 //import my db
 //const sequelize = require("./util/db");
@@ -28,8 +28,8 @@ const app = express();
 app.set('view engine', 'ejs');
 app.set('views', 'views');
 
-//const adminRoutes = require('./routes/admin');
-//const shopRoutes = require('./routes/shop');
+const adminRoutes = require('./routes/admin');
+const shopRoutes = require('./routes/shop');
 
 //an example of a db command
 //because i export a promise, i have to use then and catch
@@ -58,16 +58,16 @@ app.use( (req,res,next) => {
     //         next();
     //     })
     //     .catch(error => console.log(error));
+    next();
 });
 
-//app.use('/admin', adminRoutes);
-//app.use(shopRoutes);
+app.use('/admin', adminRoutes);
+app.use(shopRoutes);
 
 app.use(errorController.get404);
 
 //execute the mongo connect method
-mongoConnect( client => {
-    console.log(client);
+mongoConnect( () => {
     //once i know im listening to the db, start the server
     app.listen(3000);
 })

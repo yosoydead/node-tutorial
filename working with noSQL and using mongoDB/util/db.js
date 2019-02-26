@@ -34,6 +34,9 @@
 const mongodb = require("mongodb");
 const MongoClient = mongodb.MongoClient;
 
+//this will be the db we connect to
+//but initially is undefined
+let db;
 
 const mongoConnect = callback => {
 
@@ -45,12 +48,26 @@ const mongoConnect = callback => {
     MongoClient.connect("mongodb+srv://yosoydead:yosoydead1@cluster0-z30gt.mongodb.net/test?retryWrites=true", {useNewUrlParser: true})
     .then( client => {
         console.log("connected");
-        callback(client);
+        //set the db = to the db from the cluster
+        //it can receive a parameter that specified which db to connect to
+        //if you have multiple dbs
+        db = client.db();
+        callback();
     })
     .catch( error => {
         console.log("cant connect");
         console.log(error);
+        throw error;
     });
 };
+
+const getDb = () => {
+    if(db){
+        //if the db is not undefined, i will return access to that db
+        return db;
+    }
+    throw "No db found";
+}
 //export the connect method
-module.exports = mongoConnect;
+exports.mongoConnect = mongoConnect;
+exports.getDb = getDb;
