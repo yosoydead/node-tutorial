@@ -19,12 +19,38 @@
 // module.exports = pool.promise();
 
 //import sequelize
-const Sequelize = require("sequelize");
+//const Sequelize = require("sequelize");
 
 //this new object needs some parameters to get it going
 //it needs the name of the database to connect to, the username to access it and the password
 //the forth one is optional
 //it creates a connection pool and connects to the db automatically and other stuff
-const sequelize = new Sequelize("node-complete", "root", "1234", {dialect: "mysql", host: "localhost"});
+//const sequelize = new Sequelize("node-complete", "root", "1234", {dialect: "mysql", host: "localhost"});
 
-module.exports = sequelize;
+//module.exports = sequelize;
+
+
+//import mongodb
+const mongodb = require("mongodb");
+const MongoClient = mongodb.MongoClient;
+
+
+const mongoConnect = callback => {
+
+    //use the client to connect to a db
+
+    //the client receives an url to connect
+    //url is provided by mongodb atlas in the connect to application tab
+    //the connect method returns a promise
+    MongoClient.connect("mongodb+srv://yosoydead:yosoydead1@cluster0-z30gt.mongodb.net/test?retryWrites=true", {useNewUrlParser: true})
+    .then( client => {
+        console.log("connected");
+        callback(client);
+    })
+    .catch( error => {
+        console.log("cant connect");
+        console.log(error);
+    });
+};
+//export the connect method
+module.exports = mongoConnect;
