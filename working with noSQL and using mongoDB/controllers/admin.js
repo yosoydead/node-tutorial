@@ -92,3 +92,18 @@ exports.postEditProduct = (req, res, next) => {
         })
         .catch(error => console.log(error));
 };
+
+exports.postDeleteProduct = (req, res, next) => {
+    const prodId = req.body.productId;
+    //Product.deleteById(prodId);
+
+
+    Product.deleteById(prodId)
+        .then( ()=> {
+            console.log("item deleted from view");
+            res.redirect("/admin/products");
+        })
+        .catch(err =>{
+            console.log("couldn't delete item using view");
+        })
+};
