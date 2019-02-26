@@ -10,12 +10,12 @@ const mongodb = require("mongodb");
 //create the product "schema"
 class Product {
 
-    constructor(title, price, description, imageUrl){
+    constructor(title, price, description, imageUrl, id){
         this.title = title;
         this.price = price;
         this.description = description;
         this.imageUrl = imageUrl;
-
+        this._id = id;
     }
 
     //this method will be used to save data to mongodb
@@ -23,13 +23,26 @@ class Product {
     save() {
         //access the db
         const db = getDb();
+        let operation;
+
+        if(this._id){
+            //update one takes at least 2 arguments
+            //first -> filter for an element
+            //second -> how to update the object
+            operation = db.collection("products").updateOne( 
+                {_id: new mongodb.ObjectId(this._id)},
+                {$set: this});
+        }else{
+            operation = db.collection("products").insertOne(this);
+        }
+        
 
         //tell the db in which collection you want to insert data
         //if it doesnt exist, it will be created automatically
         //after collection, you can use insertOne() or insertMany([])
         //insertMany([]) takes an array of stuff you want to insert in the db
         //insert also returns a promise
-        return db.collection("products").insertOne(this)
+        return operation
         .then(result => {
             console.log(result);
         })
