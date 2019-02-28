@@ -14,7 +14,7 @@ exports.postAddProduct = (req, res, next) => {
     const imageUrl = req.body.imageUrl;
     const price = req.body.price;
     const description = req.body.description;
-    const product = new Product(title, price, description, imageUrl);
+    const product = new Product(title, price, description, imageUrl, null, req.user._id);
     //because i use sequelize now, i just can use its methods to work with the database based on the defined model
     //having created a user, i have to specify to which user the product belongs to
     //because i specified to sequelize that a user has a many relationship, it will create a method that allows me

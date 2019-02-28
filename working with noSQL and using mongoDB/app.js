@@ -8,6 +8,9 @@ const errorController = require('./controllers/error');
 //import the mongodb connection
 const mongoConnect = require("./util/db").mongoConnect;
 
+//import the mongo user model
+const User = require("./models/user");
+
 //import my db
 //const sequelize = require("./util/db");
 
@@ -52,13 +55,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //having a dummy user created, i will use it to register any products created from now on
 app.use( (req,res,next) => {
-    // User.findById(1)
-    //     .then(user => {
-    //         req.user = user;
-    //         next();
-    //     })
-    //     .catch(error => console.log(error));
-    next();
+    User.findById("5c784d521c9d440000d431db")
+        .then(user => {
+            req.user = user;
+            next();
+        })
+        .catch(error => console.log(error));
+    //next();
 });
 
 app.use('/admin', adminRoutes);
@@ -70,6 +73,8 @@ app.use(errorController.get404);
 mongoConnect( () => {
     //once i know im listening to the db, start the server
     app.listen(3000);
+
+
 })
 
 //defining that a product belongs to a user
