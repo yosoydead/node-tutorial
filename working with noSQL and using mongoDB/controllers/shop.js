@@ -50,6 +50,22 @@ exports.postCart = (req, res, next) =>{
             return req.user.addToCart(product);
         })
         .then(result => {
-            console.log(result);
+            //console.log(result);
+            res.redirect("/cart");
         });
+}
+
+exports.getCart = (req,res,next) => {
+    req.user
+        .getCart()
+        .then(products => {
+            res.render("shop/cart", {
+                path: "/cart",
+                pageTitle: "Your cart",
+                products: products
+            });
+        })
+        .catch(err => {
+            console.log(err);
+        })
 }
