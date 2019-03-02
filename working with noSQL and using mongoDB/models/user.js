@@ -92,6 +92,65 @@ class User {
                 console.log(err)
             });
     }
+
+    deteleItemFromCart(productId) {
+        //first of all, copy the entire cart
+        //except the one i want to remove
+        const updatedCartItems = this.cart.items.filter(item => {
+            //copy in the new array all the items that don't have the id = to
+            //the given one as argument
+            return item.productId.toString() !== productId.toString();
+        });
+
+        //update the db
+        const db = getDb();
+
+        return db.collection("users")
+            .updateOne(
+                { _id: new mongodb.ObjectId(this._id) },
+                { $set: { cart: { items: updatedCartItems } } }
+            );
+    }
+
+    addOrder() {
+        const db = getDb();
+        return this.getCart().then(products => {
+            const order = {
+                items: products,
+                user: {
+                    _id: new mongodb.ObjectId(this._id),
+                    name: this.name,
+                    email: this.email
+                }
+            };
+            //create a new collection that stores the orders and insert one new order
+            //that contains all the items from the cart
+            return db.collection("orders").insertOne(order);
+
+
+        }).then(result => {
+            //if the operation is successful, clear the cart from the page
+            //and from the db
+            //this means that the cart will be an empty array
+            this.cart = { items: [] }
+
+            return db.collection("users")
+                .updateOne(
+                    { _id: new mongodb.ObjectId(this._id) },
+                    { $set: { cart: { items: [] } } }
+                );
+        });
+    }
+
+    getOrders() {
+        const db = getDb();
+
+        //search in the db for a field called user with a property of _id
+        //and compare it to the current users id
+        return db.collection("orders")
+            .find( {"user._id": new mongodb.ObjectId(this._id)} )
+            .toArray();
+    }
 }
 
 module.exports = User;

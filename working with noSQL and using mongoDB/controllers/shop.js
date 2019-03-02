@@ -69,3 +69,39 @@ exports.getCart = (req,res,next) => {
             console.log(err);
         })
 }
+
+exports.postCartDeleteProduct = (req,res,next) => {
+    const prodId = req.body.productId;
+    req.user.deteleItemFromCart(prodId)
+        .then(result => {
+            res.redirect("/cart");
+        })
+        .catch(err => {
+            console.log(err);
+        });
+}
+
+exports.getOrders = (req,res,next) => {
+    req.user.getOrders()
+        .then(orders => {
+            res.render("shop/orders",{
+                path: "/orders",
+                pageTitle: "Your orders",
+                orders: orders
+            });
+        })
+        .catch(err => {
+            console.log(err)
+        });
+}
+
+exports.postOrder = (req,res,next) => {
+    req.user
+        .addOrder()
+        .then(result => {
+            res.redirect("/orders");
+        })
+        .catch(err => {
+            console.log(err)
+        });
+}
