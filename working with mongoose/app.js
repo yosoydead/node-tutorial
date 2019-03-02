@@ -12,7 +12,7 @@ const errorController = require('./controllers/error');
 //const mongoConnect = require("./util/db").mongoConnect;
 
 //import the mongo user model
-//const User = require("./models/user");
+const User = require("./models/user");
 
 //import my db
 //const sequelize = require("./util/db");
@@ -57,15 +57,15 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 //having a dummy user created, i will use it to register any products created from now on
-// app.use( (req,res,next) => {
-//     User.findById("5c784d521c9d440000d431db")
-//         .then(user => {
-//             req.user = new User(user.name, user.email, user.cart, user._id);
-//             next();
-//         })
-//         .catch(error => console.log(error));
-//     //next();
-// });
+app.use( (req,res,next) => {
+    User.findById("5c7a9255497dc01782c308e1")
+        .then(user => {
+            req.user = user;
+            next();
+        })
+        .catch(error => console.log(error));
+    //next();
+});
 
 app.use('/admin', adminRoutes);
 app.use(shopRoutes);
@@ -76,6 +76,21 @@ app.use(errorController.get404);
 mongoose.connect("mongodb+srv://yosoydead:yosoydead1@cluster0-z30gt.mongodb.net/shop?retryWrites=true", {useNewUrlParser: true})
     .then(result => {
         console.log("we have connection");
+
+        User.findOne().then(user => {
+            if(!user){
+                //create a user when accessing the site
+                const user = new User({
+                    name: "Bogdan",
+                    email: "bla@test.com",
+                    cart: {
+                        items: []
+                    }
+                });
+            }
+            user.save();
+        })
+
         //at this point im connected
         app.listen(3000);
     })
