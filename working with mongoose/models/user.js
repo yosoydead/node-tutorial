@@ -20,6 +20,7 @@ const userSchema = new Schema({
                 productId: {
                     //this is the type of id that mongodb uses to store stuff
                     type: Schema.Types.ObjectId,
+                    ref: "Product",
                     required: true
                 },
                 quantity: {
