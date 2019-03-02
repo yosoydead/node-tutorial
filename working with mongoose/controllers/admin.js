@@ -41,6 +41,10 @@ exports.getProducts = (req, res, next) => {
     //mongoose returns an array with all the products from the db
     //it does not return a cursor
     Product.find()
+        // //fetch some specific data about a product excluding the id
+        // .select("title price -_id")
+        // //populate the specific tag with some data from that object
+        // .populate("userId", "name")
         .then(products => {
             res.render("admin/products", {
                 prods: products,
