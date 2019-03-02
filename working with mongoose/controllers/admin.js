@@ -35,7 +35,11 @@ exports.postAddProduct = (req, res, next) => {
 };
 
 exports.getProducts = (req, res, next) => {
-    Product.fetchAll()
+
+    //Product.fetchAll()
+    //mongoose returns an array with all the products from the db
+    //it does not return a cursor
+    Product.find()
         .then(products => {
             res.render("admin/products", {
                 prods: products,
@@ -53,7 +57,10 @@ exports.getEditProduct = (req, res, next) => {
     if (!editMode) {
         return res.redirect('/');
     }
+
     const prodId = req.params.productId;
+
+    //findById is provided by mongoose
     Product.findById(prodId)
         .then(product => {
             if (!product) {
@@ -78,23 +85,25 @@ exports.postEditProduct = (req, res, next) => {
     const updatedPrice = req.body.price;
     const updatedImageUrl = req.body.imageUrl;
     const updatedDesc = req.body.description;
-    // const updatedProduct = new Product(
-    //   prodId,
-    //   updatedTitle,
-    //   updatedImageUrl,
-    //   updatedDesc,
-    //   updatedPrice
-    // );
-    // updatedProduct.save();
+    
+    //findById is provided by mongoose
+    Product.findById(prodId).then(product => {
+        product.title = updatedTitle;
+        product.description = updatedDesc;
+        product.imageUrl = updatedImageUrl;
+        product.price = updatedPrice;
 
-    //first i need to find the product with the specific id that i want to edit
-    const product = new Product(updatedTitle, updatedPrice, updatedDesc, updatedImageUrl, new ObjectId(prodId));
-    product.save()
+        //save is provided by mongoose
+        //return so i can use then after this
+        return product.save();
+    })
         .then(result => {
-            console.log("updated product!!!!!!!!!!!!!!!!!")
-            res.redirect('/admin/products');
+            console.log("product updated!!");
+            res.redirect("/admin/products");
         })
-        .catch(error => console.log(error));
+        .catch(err => {
+            console.log(err);
+        });
 };
 
 exports.postDeleteProduct = (req, res, next) => {
