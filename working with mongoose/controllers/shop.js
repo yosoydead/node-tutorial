@@ -36,6 +36,7 @@ exports.getIndex = (req,res,next) => {
 
 exports.getProduct = (req,res,next)=>{
     const prodId = req.params.productId;
+    //mongoose has a findById method
     Product.findById(prodId)
         .then( product => {
             res.render("shop/product-detail", {
