@@ -1,8 +1,11 @@
 const Product = require("../models/product");
 
 exports.getProducts = (req,res,next) => {
-    Product.fetchAll()
+    //Product.fetchAll()
+    //this find method comes from mongoose and gives me all the products from the db
+    Product.find()
         .then( products => {
+            console.log(products);
             res.render("shop/product-list", {
                 prods: products,
                 pageTitle: "All Products",
@@ -15,7 +18,10 @@ exports.getProducts = (req,res,next) => {
 }
 
 exports.getIndex = (req,res,next) => {
-    Product.fetchAll()
+    //Product.fetchAll()
+     //this find method comes from mongoose and gives me all the products from the db
+     //the items are stored in an array
+     Product.find()
         .then( products => {
             res.render("shop/product-list", {
                 prods: products,

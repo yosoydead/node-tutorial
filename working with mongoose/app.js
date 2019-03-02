@@ -1,15 +1,18 @@
 const path = require('path');
 
+//import mongoose
+const mongoose = require("mongoose");
+
 const express = require('express');
 const bodyParser = require('body-parser');
 
 const errorController = require('./controllers/error');
 
 //import the mongodb connection
-const mongoConnect = require("./util/db").mongoConnect;
+//const mongoConnect = require("./util/db").mongoConnect;
 
 //import the mongo user model
-const User = require("./models/user");
+//const User = require("./models/user");
 
 //import my db
 //const sequelize = require("./util/db");
@@ -54,28 +57,39 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 //having a dummy user created, i will use it to register any products created from now on
-app.use( (req,res,next) => {
-    User.findById("5c784d521c9d440000d431db")
-        .then(user => {
-            req.user = new User(user.name, user.email, user.cart, user._id);
-            next();
-        })
-        .catch(error => console.log(error));
-    //next();
-});
+// app.use( (req,res,next) => {
+//     User.findById("5c784d521c9d440000d431db")
+//         .then(user => {
+//             req.user = new User(user.name, user.email, user.cart, user._id);
+//             next();
+//         })
+//         .catch(error => console.log(error));
+//     //next();
+// });
 
 app.use('/admin', adminRoutes);
 app.use(shopRoutes);
 
 app.use(errorController.get404);
 
-//execute the mongo connect method
-mongoConnect( () => {
-    //once i know im listening to the db, start the server
-    app.listen(3000);
+//connect with mongoose
+mongoose.connect("mongodb+srv://yosoydead:yosoydead1@cluster0-z30gt.mongodb.net/shop?retryWrites=true", {useNewUrlParser: true})
+    .then(result => {
+        console.log("we have connection");
+        //at this point im connected
+        app.listen(3000);
+    })
+    .catch(err => {
+        console.log(err);
+    })
+
+// //execute the mongo connect method
+// mongoConnect( () => {
+//     //once i know im listening to the db, start the server
+//     app.listen(3000);
 
 
-})
+// })
 
 //defining that a product belongs to a user
 //if a user is deleted, delete all of his products
