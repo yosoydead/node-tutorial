@@ -36,7 +36,7 @@ const userSchema = new Schema({
 //add my custom functions to the user
 userSchema.methods.addToCart = function(product){
     const cartProductIndex = this.cart.items.findIndex(cp => {
-        return cp.productId.toString() === product._id.toString();
+        return cp.productId.toString() === product.id.toString();
     });
 
     let newQuantity = 1;
@@ -67,7 +67,19 @@ userSchema.methods.addToCart = function(product){
     return this.save();
 }
 
+userSchema.methods.removeFromCart = function(productId) {
+    // const updatedCartItems = this.cart.items.filter(item => {
+    //     return item.productId.toString() !== productId.toString();
+    // });
+    const updatedCartItems = this.cart.items.filter(item => {
+        //copy in the new array all the items that don't have the id = to
+        //the given one as argument
+        return item.productId.toString() !== productId.toString();
+    });
 
+    this.cart.items = updatedCartItems;
+    return this.save();
+}
 
 //export the user as an object that can be worked with
 module.exports = mongoose.model("User", userSchema);
