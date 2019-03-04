@@ -34,3 +34,14 @@ exports.postLogin = (req,res,next) => {
         })
         .catch(error => console.log(error));
 }
+
+exports.postLogout = (req,res,next) => {
+    //clear out the session
+
+    //this method requires a function that will be run after
+    //the session is destroyed
+    req.session.destroy((err) => {
+        console.log(err);
+        res.redirect("/");
+    });
+}
