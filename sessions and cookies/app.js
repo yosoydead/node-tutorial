@@ -90,15 +90,19 @@ app.use(session( {
 } ));
 
 //having a dummy user created, i will use it to register any products created from now on
-// app.use( (req,res,next) => {
-//     User.findById("5c7a9255497dc01782c308e1")
-//         .then(user => {
-//             req.user = user;
-//             next();
-//         })
-//         .catch(error => console.log(error));
-//     //next();
-// });
+app.use( (req,res,next) => {
+    if(!req.session.user){
+        return next();
+    }
+    User.findById(req.session.user._id)
+        .then(user => {
+            //load the real mongoose user model after setting up cookies and stuff
+            req.user = user;
+            next();
+        })
+        .catch(error => console.log(error));
+    //next();
+});
 
 app.use('/admin', adminRoutes);
 app.use(shopRoutes);

@@ -22,7 +22,7 @@ exports.postAddProduct = (req, res, next) => {
         description: description,
         imageUrl: imageUrl,
         //the user is stored in the session now
-        userId: req.session.user
+        userId: req.user
     });
     
     product
