@@ -3,6 +3,13 @@ const path = require('path');
 //import mongoose
 const mongoose = require("mongoose");
 
+//import the session manager
+const session = require("express-session");
+
+//import the mongodb session store which is called as a function
+//i need to pass my session instance 
+const MongoDBStore = require("connect-mongodb-session")(session);
+
 const express = require('express');
 const bodyParser = require('body-parser');
 
@@ -30,6 +37,15 @@ const User = require("./models/user");
 // const OrderItem = require("./models/order-item");
 
 const app = express();
+
+//initialize a new store
+//in the constructor i need to pass an object to configure it
+//uri -> connection string
+//NEEDS a collection to store sessions
+const store = new MongoDBStore({
+    uri: "mongodb+srv://yosoydead:yosoydead1@cluster0-z30gt.mongodb.net/shop",
+    collection: "sessions"
+});
 
 app.set('view engine', 'ejs');
 app.set('views', 'views');
@@ -59,16 +75,30 @@ const authRoutes = require("./routes/auth");
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
+//setup the session
+//it needs an object inside the function call to configure it
+//secret is the salt that is used to hash stuff
+//resave -> the session will not be saved on every request, but only if something is changed
+//saveUninitialized -> no session is saved for a request where it doesnt need to be changed
+//can also configure the cookie, like max-age and other stuff
+//store -> the place where sessions will be saved IE databases
+app.use(session( {
+    secret:"my secret",
+    resave: false,
+    saveUninitialized: false,
+    store: store
+} ));
+
 //having a dummy user created, i will use it to register any products created from now on
-app.use( (req,res,next) => {
-    User.findById("5c7a9255497dc01782c308e1")
-        .then(user => {
-            req.user = user;
-            next();
-        })
-        .catch(error => console.log(error));
-    //next();
-});
+// app.use( (req,res,next) => {
+//     User.findById("5c7a9255497dc01782c308e1")
+//         .then(user => {
+//             req.user = user;
+//             next();
+//         })
+//         .catch(error => console.log(error));
+//     //next();
+// });
 
 app.use('/admin', adminRoutes);
 app.use(shopRoutes);

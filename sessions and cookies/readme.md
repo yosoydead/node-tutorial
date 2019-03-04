@@ -1,2 +1,5 @@
 * **This will use the code from the module working with mongoose**
-* A **cookie** is a form to store some kind of data in the browser (client side). When the user is logged in, store some information that the user is logged in. If the user reloads the page and a new request is sent, we still have the info that the user is logged in.
+* A **cookie** is a form to store some kind of data in the browser (client side). When the user is logged in, store some information that the user is logged in. If the user reloads the page and a new request is sent, we still have the info that the user is logged in.  **(it is not a good idea to store this kind of information on the client side)**
+* A **session** is also a form to store some data but this time, the information can be stored on the server (or a db). A user needs to tell the browser to which session he belongs to and that can be sent through a cookie **(that id needs to be hashed -> encrypted)**. That data can have the confidential data that can't be changed from inside the browser.
+* To implement a session i need to install another package -> **npm install --save express-session**.
+* I installed a package -> **npm install --save connect-mongodb-session** to manage(save) sessions through mongodb which I am currently using as a database. 
