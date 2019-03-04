@@ -37,6 +37,9 @@ app.set('views', 'views');
 const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
 
+//login route
+const authRoutes = require("./routes/auth");
+
 //an example of a db command
 //because i export a promise, i have to use then and catch
 //then executes if everything works as expected
@@ -69,6 +72,7 @@ app.use( (req,res,next) => {
 
 app.use('/admin', adminRoutes);
 app.use(shopRoutes);
+app.use(authRoutes);
 
 app.use(errorController.get404);
 

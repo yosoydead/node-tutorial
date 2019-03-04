@@ -1,1 +1,2 @@
 * **This will use the code from the module working with mongoose**
+* A **cookie** is a form to store some kind of data in the browser (client side). When the user is logged in, store some information that the user is logged in. If the user reloads the page and a new request is sent, we still have the info that the user is logged in.
